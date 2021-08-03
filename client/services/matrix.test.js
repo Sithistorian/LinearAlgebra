@@ -94,39 +94,87 @@ describe('Matrix class', () => {
     expect(testMatrixIdentity(a, b)).toBe(true);
   })
 
+  test('testMatrixIdentity should throw error if matricies are different sizes', () => {
+    expect(() => {matrix1.testMatrixIdentity(matrix4)}).toThrow();
+  })
+
   test('testMatrixIdentity should get the correct results', () => {
-    expect(testMatrixIdentity(matrix0, matrix1)).toBe(false);
-    expect(testMatrixIdentity(matrix1, matrix3)).toBe(false);
-    expect(testMatrixIdentity(matrix0, matrix0)).toBe(true);
+    expect(matrix0.testMatrixIdentity(matrix1)).toBe(false);
+    expect(matrix1.testMatrixIdentity(matrix3)).toBe(false);
+    expect(matrix0.testMatrixIdentity(matrix0)).toBe(true);
 
     let a = [[8, 0, 0, 0], [0, 8, 0, 0], [0, 0, 8, 0]. [0, 0, 0, 8]];
 
-    expect(testMatrixIdentity(matrix4, a)).toBe(true);
+    expect(matrix4.testMatrixIdentity(a)).toBe(true);
 
     a.changeValueAtIndex(1, 2, 3);
 
-    expect(testMatrixIdentity(matrix4, a)).toBe(false);
+    expect(matrix4.testMatrixIdentity(a)).toBe(false);
 
     b = [[8, 3, 0, 0], [0, 8, 0, 0], [0, 0, 8, 0]. [0, 0, 0, 8]];
 
-    expect(testMatrixIdentity(a, b)).toBe(true);
+    expect(a.testMatrixIdentity(b)).toBe(true);
 
   })
 
   //Tests for Matrix Addition
 
-  test('testMatrixAddition should be a method on matrix', () => {
-    expect(typeof matrix0.testMatrixIdentity).toBe('function');
+  test('matrixAddition should be a method on matrix', () => {
+    expect(typeof matrix0.matrixAddition).toBe('function');
   });
 
-  test('testMatrixAddition should get the correct results', () => {
-    expect(testMatrixAddition(matrix0, matrix0))toStrictEqual([[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
+  test('matrixAddition should get the correct results', () => {
+    expect(matrix0.matrixAddition(matrix0)).toStrictEqual([[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
     let a = new Matrix(4, 4, 2);
-    expect(testMatrixAddition(matrix1, matrix1))toStrictEqual(a);
+    expect(matrix1.matrixAddition(matrix1)).toStrictEqual(a);
     a.changeValueAtIndex(1, 1, 5);
     a.changeValueAtIndex(1, 2, 6);
-    expect(testMatrixAddition(a, matrix1)).toStrictEqual([[6, 7, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1,1]])
+    expect(a.matrixAddition(matrix1)).toStrictEqual([[6, 7, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]])
   })
 
+  //Tests for Matrix Subtraction
 
+  test('matrixSubtraction should be a method on matrix', () => {
+    expect(typeof matrix0.matrixSubtraction).toBe('function');
+  });
+
+  test('matrixSubtraction should get the correct results', () => {
+    expect(matrix0.matrixSubtraction(matrix0)).toStrictEqual([[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
+    let a = new Matrix(4, 4, 0);
+    expect(matrix1.matrixSubtraction(matrix1)).toStrictEqual(a);
+    a.changeValueAtIndex(1, 1, 5);
+    a.changeValueAtIndex(1, 2, 6);
+    expect(a.matrixSubtraction(matrix1)).toStrictEqual([[4, 5, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1]])
+    expect(matrix1.matrixSubtraction(a)).toStrictEqual([[-4, -5, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]])
+  })
+
+  //Tests for Matrix Transposition
+
+  test('transposeMatrix should be a method on Matrix', () => {
+    expect(typeof matrix0.transposeMatrix).toBe('function');
+  })
+
+  test('transposeMatrix should get the correct results', () => {
+
+    let a = new Matrix(4, 4, 1);
+    a.changeValueAtIndex(1, 2, 2);
+    a.changeValueAtIndex(1, 3, 3);
+    a.changeValueAtIndex(1, 4, 4);
+    a.changeValueAtIndex(2, 1, 5);
+    a.changeValueAtIndex(2, 3, 6);
+    a.changeValueAtIndex(2, 4, 7);
+    a.changeValueAtIndex(3, 1, 8);
+    a.changeValueAtIndex(3, 2, 9);
+    a.changeValueAtIndex(3, 4, 10);
+    a.changeValueAtIndex(4, 1, 11);
+    a.changeValueAtIndex(4, 2, 12);
+    a.changeValueAtIndex(4, 3, 13);
+
+
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        expect(a.getValueAtIndex(i + 1, j + 1)).toBe(a.transpose.getValueAtIndex(j + 1, i + 1));
+      }
+    }
+  })
 })

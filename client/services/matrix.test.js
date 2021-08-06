@@ -94,16 +94,19 @@ describe('Matrix class', () => {
     expect(testMatrixIdentity(a, b)).toBe(true);
   })
 
-  test('testMatrixIdentity should throw error if matricies are different sizes', () => {
-    expect(() => {matrix1.testMatrixIdentity(matrix4)}).toThrow();
+  test('testMatrixIdentity should return false for matricies of different sizes', () => {
+    expect(matrix0.testMatrixIdentity(matrix1)).toBe(false);
+    expect(matrix1.testMatrixIdentity(matrix3)).toBe(false);
   })
 
   test('testMatrixIdentity should get the correct results', () => {
-    expect(matrix0.testMatrixIdentity(matrix1)).toBe(false);
-    expect(matrix1.testMatrixIdentity(matrix3)).toBe(false);
     expect(matrix0.testMatrixIdentity(matrix0)).toBe(true);
 
-    let a = [[8, 0, 0, 0], [0, 8, 0, 0], [0, 0, 8, 0]. [0, 0, 0, 8]];
+    let a = new Matrix(4, 4, 0);
+    a.changeValueAtIndex(1, 1, 8);
+    a.changeValueAtIndex(2, 2, 8);
+    a.changeValueAtIndex(3, 3, 8);
+    a.changeValueAtIndex(4, 4, 8);
 
     expect(matrix4.testMatrixIdentity(a)).toBe(true);
 

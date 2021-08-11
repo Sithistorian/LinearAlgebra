@@ -187,7 +187,7 @@ describe('Matrix class', () => {
   //Tests for Matrix Transposition
 
   test('transposeMatrix should be a method on Matrix', () => {
-    expect(typeof matrix0.transposeMatrix).toBe('function');
+    expect(typeof matrix0.transpose).toBe('function');
   })
 
   test('transposeMatrix should get the correct results', () => {
@@ -206,10 +206,13 @@ describe('Matrix class', () => {
     a.changeValueAtIndex(4, 2, 12);
     a.changeValueAtIndex(4, 3, 13);
 
+    let copy = JSON.parse(JSON.stringify(a.matrix));
+
+    a.transpose();
 
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
-        expect(a.getValueAtIndex(i + 1, j + 1)).toBe(a.transpose.getValueAtIndex(j + 1, i + 1));
+        expect(copy[i][j]).toBe(a.getValueAtIndex(j + 1, i + 1));
       }
     }
   })

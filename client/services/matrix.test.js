@@ -150,7 +150,6 @@ describe('Matrix class', () => {
     a.changeValueAtIndex(1, 2, 6);
     a.matrixAddition(matrix1)
 
-    console.log('Here:', a.matrix, matrix1)
     expect(a.matrix).toStrictEqual([[7, 8, 4, 4], [4, 4, 4, 4], [4, 4, 4, 4], [4, 4, 4, 4]])
     matrix1 = new Matrix(4, 4, 1);
   })
@@ -162,13 +161,27 @@ describe('Matrix class', () => {
   });
 
   test('matrixSubtraction should get the correct results', () => {
-    expect(matrix0.matrixSubtraction(matrix0)).toStrictEqual([[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
+
+    matrix0.matrixSubtraction(matrix0);
+
+    expect(matrix0.matrix).toStrictEqual([[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
+
     let a = new Matrix(4, 4, 0);
-    expect(matrix1.matrixSubtraction(matrix1)).toStrictEqual(a);
+    matrix1.matrixSubtraction(matrix1);
+
+    expect(matrix1.matrix).toStrictEqual(a.matrix);
+
     a.changeValueAtIndex(1, 1, 5);
     a.changeValueAtIndex(1, 2, 6);
-    expect(a.matrixSubtraction(matrix1)).toStrictEqual([[4, 5, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1]])
-    expect(matrix1.matrixSubtraction(a)).toStrictEqual([[-4, -5, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]])
+
+    a.matrixSubtraction(matrix1);
+
+
+    expect(a.matrix).toStrictEqual([[5, 6, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
+
+    console.log( 'Matrix1', matrix1.matrix, 'A', a.matrix,)
+    matrix1.matrixSubtraction(a)
+    expect(matrix1.matrix).toStrictEqual([[-5, -6, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]])
   })
 
   //Tests for Matrix Transposition

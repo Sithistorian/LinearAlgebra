@@ -2,17 +2,19 @@ const { Matrix } = require('./matrix');
 
 describe('Matrix class', () => {
 
-  let matrix0 = new Matrix();
-  let matrix1 = new Matrix(4, 4, 1);
-  let matrix2 = new Matrix(5, 6, 2);
-  let matrix3 = new Matrix(6, 7, 3);
+    let matrix0 = new Matrix();
+    let matrix1 = new Matrix(4, 4, 1);
+    let matrix2 = new Matrix(5, 6, 2);
+    let matrix3 = new Matrix(6, 7, 3);
 
-  let matrix4 = new Matrix(4, 4, 0);
+    let matrix4 = new Matrix(4, 4, 0);
 
-  matrix4.changeValueAtIndex(1, 1, 8);
-  matrix4.changeValueAtIndex(2, 2, 8);
-  matrix4.changeValueAtIndex(3, 3, 8);
-  matrix4.changeValueAtIndex(4, 4, 8);
+    matrix4.changeValueAtIndex(1, 1, 8);
+    matrix4.changeValueAtIndex(2, 2, 8);
+    matrix4.changeValueAtIndex(3, 3, 8);
+    matrix4.changeValueAtIndex(4, 4, 8);
+
+
 
 
   test('Matrix0 should be a 3x3 matrix filled with 0s', () => {
@@ -84,14 +86,15 @@ describe('Matrix class', () => {
     expect(matrix3.getValueAtIndex(1, 1)).toBe(3);
     matrix0.changeValueAtIndex(1, 3, 9);
     expect(matrix0.getValueAtIndex(1, 3)).toBe(9);
+    matrix0.changeValueAtIndex(1, 3, 0);
   })
 
   //Tests for Matrix identity
 
-  test('testMatrixIdentity should show that [] and [] are identical', () => {
-    let a = [];
-    let b = [];
-    expect(testMatrixIdentity(a, b)).toBe(true);
+  test('testMatrixIdentity should show that two empty matricies [] and [] are identical', () => {
+    let a = new Matrix(0, 0);
+    let b = new Matrix(0, 0)
+    expect(a.testMatrixIdentity(b)).toBe(true);
   })
 
   test('testMatrixIdentity should return false for matricies of different sizes', () => {
@@ -114,7 +117,12 @@ describe('Matrix class', () => {
 
     expect(matrix4.testMatrixIdentity(a)).toBe(false);
 
-    b = [[8, 3, 0, 0], [0, 8, 0, 0], [0, 0, 8, 0]. [0, 0, 0, 8]];
+    let b = new Matrix(4, 4, 0);
+    b.changeValueAtIndex(1, 1, 8);
+    b.changeValueAtIndex(2, 2, 8);
+    b.changeValueAtIndex(3, 3, 8);
+    b.changeValueAtIndex(4, 4, 8);
+    b.changeValueAtIndex(1, 2, 3);
 
     expect(a.testMatrixIdentity(b)).toBe(true);
 
@@ -127,12 +135,24 @@ describe('Matrix class', () => {
   });
 
   test('matrixAddition should get the correct results', () => {
-    expect(matrix0.matrixAddition(matrix0)).toStrictEqual([[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
+
+    matrix0.matrixAddition(matrix0);
+
+    expect(matrix0.matrix).toStrictEqual([[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
+
     let a = new Matrix(4, 4, 2);
-    expect(matrix1.matrixAddition(matrix1)).toStrictEqual(a);
+
+    matrix1.matrixAddition(matrix1);
+
+    expect(matrix1.matrix).toStrictEqual(a.matrix);
+
     a.changeValueAtIndex(1, 1, 5);
     a.changeValueAtIndex(1, 2, 6);
-    expect(a.matrixAddition(matrix1)).toStrictEqual([[6, 7, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]])
+    a.matrixAddition(matrix1)
+
+    console.log('Here:', a.matrix, matrix1)
+    expect(a.matrix).toStrictEqual([[7, 8, 4, 4], [4, 4, 4, 4], [4, 4, 4, 4], [4, 4, 4, 4]])
+    matrix1 = new Matrix(4, 4, 1);
   })
 
   //Tests for Matrix Subtraction

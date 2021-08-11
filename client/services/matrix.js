@@ -32,6 +32,11 @@ class Matrix {
   }
 }
 
+let a = new Matrix(4, 4, 1);
+let b = new Matrix(4, 4, 1);
+a.matrixAddition(b)
+console.log(a.matrix);
+
 module.exports = {
 
   Matrix
